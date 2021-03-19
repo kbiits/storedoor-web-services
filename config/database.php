@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Str;
 
-$DATABASE_URL = parse_url("postgres://sxlqgkqpyeykbh:2a98a639fa46a20d31c389c091844eece8a89cae0543480f8d930d4a947d840e@ec2-54-161-239-198.compute-1.amazonaws.com:5432/dfr7ai12t2uf45");
+$DATABASE_URL = parse_url(getenv("DATABASE_URL"));
+$host = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$database = substr($url["path"], 1);
 
 return [
 
@@ -67,21 +71,21 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
+            // 'url' => env('DATABASE_URL'),
             // 'host' => env('DB_HOST', '127.0.0.1'),
-            'host' => $DATABASE_URL["host"],
+            'host' => $host,
             // 'port' => env('DB_PORT', '5432'),
-            'port' => $DATABASE_URL['port'],
+            'port' => '5432',
             // 'database' => env('DB_DATABASE', 'forge'),
-            'database' => ltrim($DATABASE_URL['path'], '/'),
+            'database' => $database,
             // 'username' => env('DB_USERNAME', 'forge'),
-            'username' => $DATABASE_URL['user'],
+            'username' => $username,
             // 'password' => env('DB_PASSWORD', ''),
-            'password' => $DATABASE_URL['pass'],
+            'password' => $password,
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => 'public',
+            'schema' => 'storedoor',
             'sslmode' => 'prefer',
         ],
 
